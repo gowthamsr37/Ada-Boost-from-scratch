@@ -18,3 +18,39 @@ These decision stumps are High Biased High Variance models as they perform weakl
 
 
 ![image](https://user-images.githubusercontent.com/94861619/196597864-7d53eec9-3479-48aa-b732-483596bbfd42.png)
+alpha it the loss function=the weight assigned to the entire model
+h(x) is the Decision Stump classifier used in this case.
+T is the number of base models used in this ensemble method. The number of base models to be used in AdaBoost depends highly on the data provided to us.
+Thus we find out the weighted sum of the classifiers in order to predict the final answer or better to say to find out H(x).
+
+Let's see the step by step process involved here:
+
+Step-1: We first assign the same sample weight to each of the data points. So we apply 1/(number of samples) to all the data points.
+
+
+Step-2: We create a decision stump and classify entire data on the basis of the threshold. We select the best feature by a greedy search algorithm and also find the threshold and split the entire data on the basis of that. We identify the best feature by calculating the error. Moreover, we use the weak learner to give us predictions.
+
+
+Step-3: We find the weight of the entire model. In other words, we find the value of alpha. Experimentally it was found that with the increase of error rate the weight decreases. Plotting a graph we get
+
+
+Now the error was found out
+
+ε=(misinterpretations)/samples=( Misclassifications)/N
+ε=Σ weights of misclassified samples
+
+If the error > 0.5 we have to just flip the decision and error=1-error.(As we have seen that in case of a weak learner the error cannot be greater than 0.5 as the weak learner will always be better than the chance.)
+
+Now we find out the weight(alpha) or loss function of the model using the formula
+
+
+Step-4: Now we have to update the weight of all the data points. We give more importance to those data points that had been labeled incorrectly and increase their weights. This is done to penalize the errors more than the correct predictions. On the other hand, less importance is given to those data points that were predicted correctly and their weights are decreased according to the formula:
+
+
+The positive sign is for wrongly predicted data points and the negative sign is for rightly predicted data points. Where omega(i) is the updated weight and omega(i-1) was the previous weight.
+
+Step-5: We normalize the updated weights so that the updated weights lie between 0 and 1 and add up to one by the formula:
+
+w(new)=w(i)/sum of all the weights
+
+We just have to follow the steps mentioned above iteratively for each base model. The number of iterations or the number of base models required depends highly upon the data provided.
